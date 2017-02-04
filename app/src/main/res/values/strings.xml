@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Spotify Auto-start</string>
+    <string name="pref_bluetooth_device">Select Bluetooth device</string>
+</resources>
