@@ -8,11 +8,15 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import java.util.Set;
 
 public class BluetoothService extends IntentService {
     private static final String OPEN_SPOTIFY = "com.ahmednuaman.spotifyautostart.spotifyauto_start.action.OPEN_SPOTIFY";
+
+    private String selectedBluetoothDevice;
 
     public BluetoothService() {
         super("BluetoothService");
@@ -21,6 +25,9 @@ public class BluetoothService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        this.selectedBluetoothDevice = sharedPref.getString(getString(R.string.selected_bluetooth_device));
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);

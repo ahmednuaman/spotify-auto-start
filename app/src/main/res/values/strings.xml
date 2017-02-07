@@ -3,4 +3,6 @@
     <string name="pref_bluetooth_device">Select Bluetooth device</string>
     <string name="pref_bluetooth_device_summary">Simply select the Bluetooth device that you want to
         open Spotify and start playing the current song once it connects with your device</string>
+    <string name="pref_file_key">com.ahmednuaman.spotifyautostart.prefs</string>
+    <string name="selected_bluetooth_device"></string>
 </resources>
