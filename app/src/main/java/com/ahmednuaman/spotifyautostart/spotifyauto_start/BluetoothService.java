@@ -27,6 +27,11 @@ public class BluetoothService extends IntentService {
         setUpIntent();
     }
 
+    @Override
+    public void onHandleIntent(Intent intent) {
+        return;
+    }
+
     private void readPreference() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         String key = getString(R.string.selected_bluetooth_device);
@@ -41,7 +46,7 @@ public class BluetoothService extends IntentService {
     }
 
     private void openSpotify() {
-        
+
     }
 
     private void getConnectedBluetoothDevices() {
