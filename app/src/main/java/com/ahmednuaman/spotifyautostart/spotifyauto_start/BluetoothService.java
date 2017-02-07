@@ -14,8 +14,6 @@ import android.preference.PreferenceManager;
 import java.util.Set;
 
 public class BluetoothService extends IntentService {
-    private static final String OPEN_SPOTIFY = "com.ahmednuaman.spotifyautostart.spotifyauto_start.action.OPEN_SPOTIFY";
-
     private String selectedBluetoothDevice;
 
     public BluetoothService() {
@@ -25,40 +23,37 @@ public class BluetoothService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
+        readPreference();
+        setUpIntent();
+    }
 
+    private void readPreference() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        this.selectedBluetoothDevice = sharedPref.getString(getString(R.string.selected_bluetooth_device));
+        String key = getString(R.string.selected_bluetooth_device);
+        this.selectedBluetoothDevice = sharedPref.getString(key, null);
+    }
 
+    private void setUpIntent() {
         IntentFilter filter = new IntentFilter();
         filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
 
         registerReceiver(receiver, filter);
     }
 
-    public static void startActionOpenSpotify(Context context) {
-        Intent intent = new Intent(context, BluetoothService.class);
-        intent.setAction(OPEN_SPOTIFY);
-        context.startService(intent);
-    }
-
-    @Override
-    protected void onHandleIntent(Intent intent) {
-        if (intent != null) {
-            final String action = intent.getAction();
-            if (OPEN_SPOTIFY.equals(action)) {
-                handleActionOpenSpotify();
-            }
-        }
-    }
-
-    private void handleActionOpenSpotify() {
+    private void openSpotify() {
+        
     }
 
     private void getConnectedBluetoothDevices() {
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         Set<BluetoothDevice> boundDevices = bluetoothAdapter.getBondedDevices();
 
-
+        for (BluetoothDevice boundDevice : boundDevices) {
+            if (boundDevice.getAddress().equals(this.selectedBluetoothDevice)) {
+                openSpotify();
+                return;
+            }
+        }
     }
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
