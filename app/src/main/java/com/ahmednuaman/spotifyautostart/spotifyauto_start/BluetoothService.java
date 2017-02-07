@@ -62,7 +62,7 @@ public class BluetoothService extends IntentService {
     private void getConnectedBluetoothDevices() {
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         Set<BluetoothDevice> boundDevices = bluetoothAdapter.getBondedDevices();
-
+        
         for (BluetoothDevice boundDevice : boundDevices) {
             if (boundDevice.getAddress().equals(this.selectedBluetoothDevice)) {
                 openSpotify();
@@ -86,5 +86,5 @@ public class BluetoothService extends IntentService {
                 }
             }
         }
-    }
+    };
 }
