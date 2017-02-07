@@ -5,11 +5,13 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.view.KeyEvent;
 
 import java.util.Set;
 
@@ -46,7 +48,15 @@ public class BluetoothService extends IntentService {
     }
 
     private void openSpotify() {
+        Intent i = new Intent(Intent.ACTION_MEDIA_BUTTON);
+        i.setComponent(new ComponentName("com.spotify.music", "com.spotify.music.internal.receiver.MediaButtonReceiver"));
+        i.putExtra(Intent.EXTRA_KEY_EVENT,new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MEDIA_PLAY));
+        sendOrderedBroadcast(i, null);
 
+        i = new Intent(Intent.ACTION_MEDIA_BUTTON);
+        i.setComponent(new ComponentName("com.spotify.music", "com.spotify.music.internal.receiver.MediaButtonReceiver"));
+        i.putExtra(Intent.EXTRA_KEY_EVENT,new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_MEDIA_PLAY));
+        sendOrderedBroadcast(i, null);
     }
 
     private void getConnectedBluetoothDevices() {
